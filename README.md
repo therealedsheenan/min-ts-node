@@ -3,6 +3,19 @@ Minimal typescript + node express implementation
 
 ### Installation
 
+##### With Docker
+Make sure you install docker in your local machine.
+Checkout docker website for more information.
+https://docs.docker.com/install/
+
+By simply running this command, it will install all the dependencies under the hood
+and get you up and running in development environment.
+
+```
+$ docker-compose up
+```
+
+##### Without docker
 ```
 $ npm install # installing dependencies
 $ npm run watch-debug # watch mode node and typescript
