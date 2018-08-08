@@ -3,24 +3,30 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import lusca from "lusca";
 import webpack from "webpack";
 import webpackDevMiddleWare from "webpack-dev-middleware";
-import webpackConfig from "./webpack.config";
+import expressHbs from "express-handlebars";
+import dotenv from "dotenv";
 
-import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
+import webpackConfig from "./webpack.config";
+import routes from "./routes";
 
 const app = express();
 
 // port
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 8000);
+
+// load environment variables
+dotenv.config({ path: ".env.example" });
 
 // webpack
 app.use(webpackDevMiddleWare(webpack(webpackConfig)));
 
 // view engine setup
 app.set("views", path.join(__dirname, "../views"));
-app.set("view engine", "hbs");
+app.engine(".hbs", expressHbs({ defaultLayout: "layout", extname: ".hbs" }));
+app.set("view engine", ".hbs");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -28,8 +34,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// security
+app.use(lusca.xframe("SAMEORIGIN"));
+app.use(lusca.xssProtection(true));
+
+// routes
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
