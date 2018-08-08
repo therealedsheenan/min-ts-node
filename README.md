@@ -17,11 +17,20 @@ $ docker-compose up
 
 ##### Without docker
 ```
-$ npm install # installing dependencies
-$ npm run watch-debug # watch mode node and typescript
+$ yarn install # installing dependencies
+$ yarn watch-debug # watch mode node and typescript
 ```
 
 Checkout `npm scripts` for other commands.
+
+### Testing
+
+Unit and integation testing
+```
+$ yarn test # run jest tests
+
+# yarn test:watch # run watch mode
+```
 
 ### Installing Node
 
