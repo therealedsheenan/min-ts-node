@@ -12,6 +12,8 @@
     "build": "npm run build-ts && npm run tslint",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "test": "jest --forceExit --coverage --verbose",
     "test:watch": "jest --watchAll",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
